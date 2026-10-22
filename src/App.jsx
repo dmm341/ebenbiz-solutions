@@ -32,7 +32,8 @@ import {
   Layers,
   BadgeCheck,
   Settings,
-  FileCheck2
+  FileCheck2,
+  MessageCircle
 } from 'lucide-react';
 
 /**
@@ -239,6 +240,8 @@ export default function App() {
   const [activePillarId, setActivePillarId] = useState('erp');
   const [openFaqIdx, setOpenFaqIdx] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const WHATSAPP_NUMBER = '254719620443';
+
   const [inquiryForm, setInquiryForm] = useState({
     name: '',
     organization: '',
@@ -249,9 +252,25 @@ export default function App() {
 
   const activePillar = FOUR_PILLARS.find((p) => p.id === activePillarId) || FOUR_PILLARS[0];
 
+  const generateWhatsAppUrl = (data) => {
+    const text =
+      `*New Inquiry from Ebenbiz Website*\n\n` +
+      `👤 *Name:* ${data.name || 'Not provided'}\n` +
+      `🏢 *Business / Org:* ${data.organization || 'Not provided'}\n` +
+      `📞 *Phone / WhatsApp:* ${data.phone || 'Not provided'}\n` +
+      `📦 *Service / Product:* ${data.service || 'General Inquiry'}\n` +
+      (data.message?.trim() ? `💬 *Requirements:* ${data.message.trim()}\n` : '') +
+      `\n_Sent via ebenbiz.com_`;
+
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  };
+
   const handleInquirySubmit = (e) => {
     e.preventDefault();
+    const url = generateWhatsAppUrl(inquiryForm);
     setFormSubmitted(true);
+    // Direct redirect to WhatsApp
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -266,6 +285,14 @@ export default function App() {
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-4 text-[11px] text-blue-100">
+            <a
+              href="https://wa.me/254719620443?text=Hello%20Ebenbiz%20Solutions,%20I%20have%20an%20inquiry."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-emerald-300 hover:text-emerald-200 font-bold transition-colors"
+            >
+              <MessageCircle className="w-3.5 h-3.5" /> WhatsApp: 0719 620 443
+            </a>
             <span className="flex items-center gap-1">
               <BadgeCheck className="w-3.5 h-3.5 text-amber-300" /> Nationwide Delivery & On-Site Support
             </span>
@@ -293,6 +320,16 @@ export default function App() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <a
+              href="https://wa.me/254719620443?text=Hello%20Ebenbiz%20Solutions,%20I%20would%20like%20to%20request%20a%20demo%20or%20quote."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors flex items-center gap-1.5"
+              title="Chat directly on WhatsApp"
+            >
+              <MessageCircle className="w-4 h-4 text-emerald-600" />
+              <span>WhatsApp Us</span>
+            </a>
             <a
               href="#contact"
               className="px-5 py-2.5 rounded-xl text-sm font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 transition-all flex items-center gap-2 border-b-2 border-amber-400"
@@ -920,22 +957,46 @@ export default function App() {
 
             <div className="lg:col-span-7">
               {formSubmitted ? (
-                <div className="p-8 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-center space-y-3">
-                  <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
+                <div className="p-8 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-center space-y-4">
+                  <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto text-emerald-600">
+                    <MessageCircle className="w-8 h-8" />
+                  </div>
                   <h3 className="text-xl font-bold text-slate-900">
-                    Inquiry Received!
+                    Connecting to WhatsApp...
                   </h3>
-                  <p className="text-sm text-slate-600">
-                    Thank you, <strong>{inquiryForm.name}</strong>! Our <strong>Ebenbiz Solutions</strong> team will contact{' '}
-                    <strong>{inquiryForm.organization}</strong> at <strong>{inquiryForm.phone}</strong> regarding{' '}
+                  <p className="text-sm text-slate-600 max-w-md mx-auto">
+                    Thank you, <strong>{inquiryForm.name}</strong>! We've prepared your inquiry regarding{' '}
                     <span className="font-semibold text-blue-700">{inquiryForm.service}</span>.
                   </p>
-                  <button
-                    onClick={() => setFormSubmitted(false)}
-                    className="mt-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white cursor-pointer"
-                  >
-                    Send Another Request
-                  </button>
+                  <p className="text-xs text-slate-500">
+                    If WhatsApp did not open automatically, click below to send your request directly to our team:
+                  </p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                    <a
+                      href={generateWhatsAppUrl(inquiryForm)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      Chat on WhatsApp Now
+                    </a>
+                    <button
+                      onClick={() => {
+                        setFormSubmitted(false);
+                        setInquiryForm({
+                          name: '',
+                          organization: '',
+                          phone: '',
+                          service: 'Complete Package (ERP + Hardware + Services)',
+                          message: ''
+                        });
+                      }}
+                      className="px-5 py-3 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200/60 transition-colors cursor-pointer"
+                    >
+                      Send Another Request
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleInquirySubmit} className="space-y-4">
@@ -1015,9 +1076,10 @@ export default function App() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/20 border-b-2 border-amber-400 transition-all cursor-pointer"
+                    className="w-full py-3.5 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/25 border-b-2 border-emerald-400 transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
                   >
-                    Submit Inquiry to Ebenbiz Solutions
+                    <MessageCircle className="w-5 h-5" />
+                    Send Inquiry via WhatsApp
                   </button>
                 </form>
               )}
@@ -1047,6 +1109,9 @@ export default function App() {
               <p className="text-[11px] text-slate-500">
                 ERP Software • Computers & Printers • Stock-Taking Contracts • Hardware Maintenance
               </p>
+              <p className="text-[11px] text-emerald-400 font-semibold mt-0.5">
+                Direct WhatsApp / Call: +254 719 620 443
+              </p>
             </div>
           </div>
 
@@ -1056,9 +1121,29 @@ export default function App() {
             <a href="#inventory" className="hover:text-emerald-400 transition-colors">Inventory Services</a>
             <a href="#maintenance" className="hover:text-amber-400 transition-colors">Maintenance</a>
             <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+            <a 
+              href="https://wa.me/254719620443?text=Hello%20Ebenbiz%20Solutions,%20I%20have%20an%20inquiry." 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1"
+            >
+              <MessageCircle className="w-3.5 h-3.5" /> 0719 620 443
+            </a>
           </div>
         </div>
       </footer>
+
+      {/* Floating WhatsApp Action Button */}
+      <a
+        href="https://wa.me/254719620443?text=Hello%20Ebenbiz%20Solutions,%20I%20have%20an%20inquiry%20regarding%20your%20services."
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-full shadow-2xl shadow-emerald-600/40 hover:scale-105 transition-all group"
+        title="Chat on WhatsApp (+254 719 620 443)"
+      >
+        <MessageCircle className="w-5 h-5 fill-white" />
+        <span className="hidden sm:inline">Chat on WhatsApp</span>
+      </a>
     </div>
   );
 }
