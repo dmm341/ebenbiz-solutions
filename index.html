@@ -2,10 +2,78 @@
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Ebenbiz Solutions — Enterprise ERP Software, Computers & POS Hardware, Professional Stock-Taking & Inventory Contracts, and Computer/Hardware Maintenance." />
     <title>Ebenbiz Solutions — ERP Software, IT Hardware, Inventory Services & Maintenance</title>
+    <meta name="description" content="Ebenbiz Solutions — Enterprise ERP Software, Computers & POS Hardware, Professional Stock-Taking & Inventory Contracts, and Computer/Hardware Maintenance." />
+    <meta name="application-name" content="Ebenbiz Solutions" />
+    <meta name="theme-color" content="#2563eb" />
+
+    <!-- Google Search & Browser Favicons (multiples of 48x48px as required by Google) -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ebenbiz Solutions" />
+    <meta property="og:title" content="Ebenbiz Solutions — ERP Software, IT Hardware, Inventory Services & Maintenance" />
+    <meta property="og:description" content="Enterprise ERP Software, Computers & POS Hardware, Professional Stock-Taking & Inventory Contracts, and Computer/Hardware Maintenance across Kenya." />
+    <meta property="og:image" content="/logo.jpg" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content="/favicon-512x512.png" />
+
+    <!-- Google Structured Data (Organization Logo & WebSite Name for Search Results) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "Ebenbiz Solutions",
+            "url": "https://ebenbiz.co.ke",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://ebenbiz.co.ke/favicon-512x512.png",
+              "width": 512,
+              "height": 512
+            },
+            "image": "https://ebenbiz.co.ke/logo.jpg",
+            "email": "info@ebenbiz.co.ke",
+            "telephone": "+254719620443",
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "telephone": "+254719620443",
+                "email": "sales@ebenbiz.co.ke",
+                "contactType": "sales",
+                "areaServed": "KE"
+              },
+              {
+                "@type": "ContactPoint",
+                "telephone": "+254719620443",
+                "email": "support@ebenbiz.co.ke",
+                "contactType": "customer support",
+                "areaServed": "KE"
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "name": "Ebenbiz Solutions",
+            "alternateName": "Ebenbiz",
+            "url": "https://ebenbiz.co.ke"
+          }
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Urbanist:wght@600;700;800;900&display=swap" rel="stylesheet" />
   </head>
   <body class="bg-white text-slate-900 antialiased selection:bg-blue-600 selection:text-white">
     <div id="root"></div>

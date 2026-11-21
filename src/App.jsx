@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ShoppingCart,
   BookOpen,
@@ -6,25 +6,16 @@ import {
   Factory,
   Truck,
   Users,
-  MapPin,
-  ShieldCheck,
   ArrowRight,
   CheckCircle2,
   Sparkles,
   Laptop,
   Printer,
   Monitor,
-  ScanBarcode,
   ClipboardCheck,
   Wrench,
-  Cpu,
-  HardDrive,
-  RefreshCw,
-  Award,
   Phone,
   Mail,
-  Clock,
-  ChevronRight,
   ChevronDown,
   HelpCircle,
   Menu,
@@ -33,21 +24,32 @@ import {
   BadgeCheck,
   Settings,
   FileCheck2,
-  MessageCircle
+  MessageCircle,
 } from 'lucide-react';
+import {
+  SectionHeading,
+  HeroErpPreview,
+  TrustBar,
+  IndustriesStrip,
+  Packages,
+  WhyChoose,
+  OfferBanner,
+  Team,
+  Testimonials,
+  Footer,
+} from './Extras.jsx';
 
 /**
  * Ebenbiz Solutions Logo Component
- * Uses the exact 3D 'E' emblem from /logo.jpg and replaces 'ERP' with 'SOLUTIONS'
+ * Uses the exact 3D 'E' emblem from /logo.jpg and displays 'SOLUTIONS'
  */
 function EbenbizSolutionsLogo({ size = 'md' }) {
   const isLarge = size === 'lg';
   return (
     <div className={`inline-flex items-center ${isLarge ? 'flex-col gap-3' : 'gap-3'}`}>
-      {/* Cropped 3D 'E' Emblem from original logo.jpg */}
       <div
         className={`relative overflow-hidden rounded-2xl shadow-md border border-blue-100 bg-white flex-shrink-0 ${
-          isLarge ? 'w-24 h-24 rounded-3xl shadow-xl' : 'w-12 h-12'
+          isLarge ? 'w-24 h-24 rounded-3xl shadow-xl' : 'w-11 h-11'
         }`}
       >
         <img
@@ -57,10 +59,9 @@ function EbenbizSolutionsLogo({ size = 'md' }) {
         />
       </div>
 
-      {/* Wordmark: ebenbiz — SOLUTIONS — */}
       <div className={isLarge ? 'text-center' : 'text-left'}>
         <div
-          className={`font-black tracking-tight leading-none ${
+          className={`font-display font-black tracking-tight leading-none ${
             isLarge ? 'text-4xl sm:text-5xl' : 'text-2xl'
           }`}
         >
@@ -90,7 +91,7 @@ const FOUR_PILLARS = [
     id: 'erp',
     badge: 'Flagship Software Product',
     title: 'Ebenbiz ERP System',
-    shortTitle: '1. Ebenbiz ERP',
+    shortTitle: '01 • Ebenbiz ERP',
     icon: Layers,
     accent: 'blue',
     headline: 'Complete Multi-Branch POS, Inventory, Manufacturing & Automated Accounting',
@@ -101,19 +102,19 @@ const FOUR_PILLARS = [
       'Automated Double-Entry Accounting with 52+ standard Chart of Accounts, Trial Balance, P&L & Balance Sheet',
       'Multi-Branch & Warehouse Inventory with Goods-in-Transit transfers and per-location ledger mapping',
       'POS-Style Supplier Invoice entry with live Buying/Selling catalog price updates and saved drafts',
-      'Bill of Materials (BOM), Work Orders, Assembly production runs & Recurring Service billing'
+      'Bill of Materials (BOM), Work Orders, Assembly production runs & Recurring Service billing',
     ],
     stats: [
       { label: 'Chart of Accounts', val: '52+ Pre-Seeded' },
       { label: 'Auto-Posting Hooks', val: '13 Real-Time' },
-      { label: 'POS Continuity', val: '100% Offline-Ready' }
-    ]
+      { label: 'POS Continuity', val: '100% Offline-Ready' },
+    ],
   },
   {
     id: 'hardware',
     badge: 'IT & POS Equipment Supply',
     title: 'Hardware & POS Equipment',
-    shortTitle: '2. Computers & Hardware',
+    shortTitle: '02 • Computers & POS',
     icon: Laptop,
     accent: 'gold',
     headline: 'Enterprise Computers, Laptops, Thermal Printers & Complete POS Hardware Kits',
@@ -124,19 +125,19 @@ const FOUR_PILLARS = [
       'High-Speed Thermal Receipt Printers (80mm USB / LAN / Bluetooth) & Label/Barcode Printers',
       '1D/2D Wireless & Countertop Barcode Scanners + Heavy-Duty Metal Cash Drawers',
       'All-in-One Touch POS Terminals, Customer Pole Displays & Uninterruptible Power Supplies (UPS)',
-      'Office LaserJet/InkTank Printers, Routers, Switches & Structured Local Area Networking'
+      'Office LaserJet/InkTank Printers, Routers, Switches & Structured Local Area Networking',
     ],
     stats: [
       { label: 'POS Plug & Play', val: 'Pre-Configured' },
       { label: 'Warranty Support', val: 'Genuine Units' },
-      { label: 'Deployment', val: 'On-Site Setup' }
-    ]
+      { label: 'Deployment', val: 'On-Site Setup' },
+    ],
   },
   {
-    id: 'inventory-services',
+    id: 'inventory',
     badge: 'Field Audits & Managed Contracts',
     title: 'Inventory & Stock-Taking Services',
-    shortTitle: '3. Stock Taking & Contracts',
+    shortTitle: '03 • Stock Audits',
     icon: ClipboardCheck,
     accent: 'green',
     headline: 'Professional Physical Stock Taking, Audits & Contract Inventory Management',
@@ -147,19 +148,19 @@ const FOUR_PILLARS = [
       'Long-Term Contract Inventory Management: scheduled monthly/quarterly counts & continuous controls',
       'Complete SKU Categorization, Barcode Generation, Shelf Labeling & Master Catalog Clean-Up',
       'Detailed Variance & Shrinkage Reconciliation Reports (Physical Count vs System Valuation)',
-      ' SOP Design for Goods Receiving (GRN), Inter-Branch Dispatch, and Warehouse Bin Organization'
+      'SOP Design for Goods Receiving (GRN), Inter-Branch Dispatch, and Warehouse Bin Organization',
     ],
     stats: [
       { label: 'Audit Accuracy', val: '99.9% Verified' },
       { label: 'Engagement Modes', val: 'One-Off or Contract' },
-      { label: 'Reporting', val: 'Full Variance Pack' }
-    ]
+      { label: 'Reporting', val: 'Full Variance Pack' },
+    ],
   },
   {
     id: 'maintenance',
     badge: 'Preventive & Corrective Care',
     title: 'Hardware Maintenance & IT Care',
-    shortTitle: '4. Hardware Maintenance',
+    shortTitle: '04 • IT Maintenance',
     icon: Wrench,
     accent: 'blue',
     headline: 'Computer Cleaning, Preventive Servicing, Repairs & Annual Maintenance Contracts',
@@ -170,14 +171,14 @@ const FOUR_PILLARS = [
       'Thermal Receipt Printer & Office Printer Maintenance (printhead cleaning, roller & cutter servicing)',
       'Annual Maintenance Contracts (AMC) with scheduled quarterly preventive visits & priority emergency callouts',
       'SSD & RAM Performance Upgrades, OS Tune-Ups, Antivirus Protection & Data Recovery',
-      'POS Counter Cable Management, Power Protection Audits & Network Troubleshooting'
+      'POS Counter Cable Management, Power Protection Audits & Network Troubleshooting',
     ],
     stats: [
       { label: 'Preventive Care', val: 'Quarterly / Monthly' },
       { label: 'Downtime Reduction', val: 'Up to 85%' },
-      { label: 'SLA Support', val: 'On-Site & Remote' }
-    ]
-  }
+      { label: 'SLA Support', val: 'On-Site & Remote' },
+    ],
+  },
 ];
 
 const HARDWARE_CATALOG = [
@@ -189,8 +190,8 @@ const HARDWARE_CATALOG = [
       'Business Laptops (Core i5 / i7, 16GB RAM, NVMe SSD)',
       'Complete Desktop PC Sets with 22"–24" IPS Monitors',
       'Mini-PCs & All-in-One Counter Workstations',
-      'External Hard Drives, SSDs, RAM & Power Adapters'
-    ]
+      'External Hard Drives, SSDs, RAM & Power Adapters',
+    ],
   },
   {
     category: 'POS & Retail Peripherals',
@@ -200,8 +201,8 @@ const HARDWARE_CATALOG = [
       '80mm Auto-Cutter Thermal Receipt Printers (USB/Ethernet)',
       '1D & 2D Omnidirectional & Wireless Barcode Scanners',
       'Heavy-Duty 5-Note / 8-Coin RJ11 Cash Drawers',
-      'Thermal Barcode Label Printers & Receipt Paper Rolls'
-    ]
+      'Thermal Barcode Label Printers & Receipt Paper Rolls',
+    ],
   },
   {
     category: 'Office Printers & Power',
@@ -211,28 +212,46 @@ const HARDWARE_CATALOG = [
       'High-Volume Duplex Laser & InkTank Multifunction Printers',
       'Line-Interactive UPS Backup Units (650VA – 3000VA)',
       'Gigabit Switches, Dual-Band Wi-Fi Access Points & Cabling',
-      ' surge Protectors, Toners, Ink Cartridges & Spares'
-    ]
-  }
+      'Surge Protectors, Toners, Ink Cartridges & Spares',
+    ],
+  },
 ];
 
 const FAQS = [
   {
     q: 'Can we engage Ebenbiz Solutions for Stock Taking or Hardware Maintenance even if we do not use Ebenbiz ERP?',
-    a: 'Absolutely! Our 4 divisions operate both independently and together. You can hire our team strictly for Physical Stock-Taking Contracts, Computer Cleaning & Maintenance, or Hardware Supply, or bundle them with Ebenbiz ERP.'
+    a: 'Absolutely! Our 4 divisions operate both independently and together. You can hire our team strictly for Physical Stock-Taking Contracts, Computer Cleaning & Maintenance, or Hardware Supply, or bundle them with Ebenbiz ERP.',
   },
   {
     q: 'How do your Inventory Management & Stock-Taking Contracts work?',
-    a: 'We offer both one-off physical stock audits and recurring contracts (monthly, quarterly, or bi-annual). Our team comes on-site with barcode scanners, counts and verifies all stock, reconciles variances against your records, and delivers a signed valuation and shrinkage report.'
+    a: 'We offer both one-off physical stock audits and recurring contracts (monthly, quarterly, or bi-annual). Our team comes on-site with barcode scanners, counts and verifies all stock, reconciles variances against your records, and delivers a signed valuation and shrinkage report.',
   },
   {
     q: 'What is included in a Computer & Hardware Maintenance Contract (AMC)?',
-    a: 'Our maintenance packages include scheduled physical blowing and deep cleaning of desktops/laptops, thermal paste replacement, printer printhead/roller servicing, OS optimization, antivirus checks, and priority on-site repair whenever a breakdown occurs.'
+    a: 'Our maintenance packages include scheduled physical blowing and deep cleaning of desktops/laptops, thermal paste replacement, printer printhead/roller servicing, OS optimization, antivirus checks, and priority on-site repair whenever a breakdown occurs.',
   },
   {
     q: 'Do you supply and set up complete POS hardware alongside Ebenbiz ERP?',
-    a: 'Yes. We supply laptops, desktops, touch POS terminals, thermal printers, barcode scanners, and cash drawers, pre-install and configure Ebenbiz ERP, and train your cashiers and accountants on-site.'
-  }
+    a: 'Yes. We supply laptops, desktops, touch POS terminals, thermal printers, barcode scanners, and cash drawers, pre-install and configure Ebenbiz ERP, and train your cashiers and accountants on-site.',
+  },
+];
+
+const DEFAULT_SERVICES = [
+  'Complete Package (ERP + Hardware + Services)',
+  'Ebenbiz ERP Software',
+  'Hardware Supply (Laptops, Computers, Printers, POS)',
+  'Inventory Services / Stock-Taking Contract',
+  'Hardware Maintenance & Computer Cleaning',
+];
+
+const NAV_LINKS = [
+  { href: '#solutions', label: 'Solutions' },
+  { href: '#industries', label: 'Industries' },
+  { href: '#erp', label: 'Ebenbiz ERP' },
+  { href: '#hardware', label: 'Hardware' },
+  { href: '#packages', label: 'Packages' },
+  { href: '#team', label: 'Team' },
+  { href: '#faq', label: 'FAQ' },
 ];
 
 export default function App() {
@@ -246,11 +265,42 @@ export default function App() {
     name: '',
     organization: '',
     phone: '',
-    service: 'Complete Package (ERP + Hardware + Services)',
-    message: ''
+    service: DEFAULT_SERVICES[0],
+    message: '',
   });
 
+  // Scroll-reveal animation for below-the-fold sections
+  useEffect(() => {
+    const targets = document.querySelectorAll('section:not(.hero-mesh) > div > *');
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in-view');
+            io.unobserve(e.target);
+          }
+        }),
+      { threshold: 0.04, rootMargin: '0px 0px -20px 0px' }
+    );
+    targets.forEach((el, i) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.95) {
+        el.classList.add('reveal', 'in-view');
+      } else {
+        el.classList.add('reveal');
+        el.style.transitionDelay = `${(i % 3) * 60}ms`;
+        io.observe(el);
+      }
+    });
+    return () => io.disconnect();
+  }, []);
+
   const activePillar = FOUR_PILLARS.find((p) => p.id === activePillarId) || FOUR_PILLARS[0];
+
+  const selectServiceForQuote = (serviceName) => {
+    setFormSubmitted(false);
+    setInquiryForm((prev) => ({ ...prev, service: serviceName }));
+  };
 
   const generateWhatsAppUrl = (data) => {
     const text =
@@ -260,7 +310,7 @@ export default function App() {
       `📞 *Phone / WhatsApp:* ${data.phone || 'Not provided'}\n` +
       `📦 *Service / Product:* ${data.service || 'General Inquiry'}\n` +
       (data.message?.trim() ? `💬 *Requirements:* ${data.message.trim()}\n` : '') +
-      `\n_Sent via ebenbiz.com_`;
+      `\n_Sent via ebenbiz.co.ke_`;
 
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
   };
@@ -269,31 +319,32 @@ export default function App() {
     e.preventDefault();
     const url = generateWhatsAppUrl(inquiryForm);
     setFormSubmitted(true);
-    // Direct redirect to WhatsApp
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  const serviceOptions = DEFAULT_SERVICES.includes(inquiryForm.service)
+    ? DEFAULT_SERVICES
+    : [inquiryForm.service, ...DEFAULT_SERVICES];
+
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      {/* Top Accent Ribbon (Blue, Gold & Green touch) */}
-      <div className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 text-white text-xs py-2 px-4 border-b border-amber-400/30">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 font-medium">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+      {/* Top Info Bar */}
+      <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950 text-white text-xs py-2 px-4 border-b border-amber-400/25">
+        <div className="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2 font-medium text-blue-100">
+            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
             <span>
-              <strong className="text-amber-300">Ebenbiz Solutions:</strong> Enterprise ERP Software • Computers & POS Hardware • Stock-Taking Contracts • IT Maintenance
+              <strong className="text-amber-300">Ebenbiz Solutions</strong> — ERP Software, POS Hardware, Stock-Taking & IT Maintenance
             </span>
           </div>
-          <div className="hidden sm:flex items-center gap-4 text-[11px] text-blue-100">
-            <a
-              href="https://wa.me/254719620443?text=Hello%20Ebenbiz%20Solutions,%20I%20have%20an%20inquiry."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-emerald-300 hover:text-emerald-200 font-bold transition-colors"
-            >
-              <MessageCircle className="w-3.5 h-3.5" /> WhatsApp: 0719 620 443
+          <div className="hidden md:flex items-center gap-5 text-[11px] text-blue-100">
+            <a href="tel:+254719620443" className="flex items-center gap-1.5 hover:text-white font-semibold">
+              <Phone className="w-3.5 h-3.5 text-emerald-400" /> +254 719 620 443
             </a>
-            <span className="flex items-center gap-1">
+            <a href="mailto:info@ebenbiz.co.ke" className="flex items-center gap-1.5 hover:text-white font-semibold">
+              <Mail className="w-3.5 h-3.5 text-blue-300" /> info@ebenbiz.co.ke
+            </a>
+            <span className="flex items-center gap-1 text-amber-200 font-semibold">
               <BadgeCheck className="w-3.5 h-3.5 text-amber-300" /> Nationwide Delivery & On-Site Support
             </span>
           </div>
@@ -302,47 +353,37 @@ export default function App() {
 
       {/* Main Sticky Header */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-blue-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          {/* Logo */}
-          <a href="#" className="focus:outline-none">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
+          <a href="#" className="focus:outline-none shrink-0">
             <EbenbizSolutionsLogo size="md" />
           </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-700">
-            <a href="#solutions" className="hover:text-blue-600 transition-colors">Our Solutions</a>
-            <a href="#erp" className="hover:text-blue-600 transition-colors">Ebenbiz ERP</a>
-            <a href="#hardware" className="hover:text-blue-600 transition-colors">Computers & Hardware</a>
-            <a href="#inventory" className="hover:text-blue-600 transition-colors">Inventory Services</a>
-            <a href="#maintenance" className="hover:text-blue-600 transition-colors">Hardware Maintenance</a>
-            <a href="#faq" className="hover:text-blue-600 transition-colors">FAQ</a>
+          {/* Clean Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-700">
+            {NAV_LINKS.map((item) => (
+              <a key={item.href} href={item.href} className="hover:text-blue-600 whitespace-nowrap">
+                {item.label}
+              </a>
+            ))}
           </nav>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-3">
-            <a
-              href="https://wa.me/254719620443?text=Hello%20Ebenbiz%20Solutions,%20I%20would%20like%20to%20request%20a%20demo%20or%20quote."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors flex items-center gap-1.5"
-              title="Chat directly on WhatsApp"
-            >
-              <MessageCircle className="w-4 h-4 text-emerald-600" />
-              <span>WhatsApp Us</span>
-            </a>
+          {/* Single Focused Header CTA */}
+          <div className="hidden md:flex items-center gap-3 shrink-0">
             <a
               href="#contact"
-              className="px-5 py-2.5 rounded-xl text-sm font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 transition-all flex items-center gap-2 border-b-2 border-amber-400"
+              className="px-5 py-2.5 rounded-xl text-sm font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 flex items-center gap-2 border-b-2 border-amber-400 whitespace-nowrap"
             >
-              Request a Quote / Demo
+              Request a Quote
               <ArrowRight className="w-4 h-4 text-amber-300" />
             </a>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
+            type="button"
+            aria-label="Toggle navigation menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2.5 rounded-xl border border-blue-100 text-blue-900 hover:bg-blue-50"
+            className="lg:hidden p-2.5 rounded-xl border border-blue-100 text-blue-900 hover:bg-blue-50 cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -350,36 +391,42 @@ export default function App() {
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-blue-100 px-4 py-5 space-y-3 shadow-xl">
-            <a href="#solutions" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-semibold text-slate-800">Our Solutions</a>
-            <a href="#erp" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-semibold text-slate-800">Ebenbiz ERP Software</a>
-            <a href="#hardware" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-semibold text-slate-800">Computers & POS Hardware</a>
-            <a href="#inventory" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-semibold text-slate-800">Stock Taking & Inventory Contracts</a>
-            <a href="#maintenance" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-semibold text-slate-800">Computer & Hardware Maintenance</a>
-            <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-semibold text-slate-800">FAQ</a>
-            <a
-              href="#contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block w-full py-3 rounded-xl text-center font-bold bg-blue-600 text-white shadow-md"
-            >
-              Request a Quote or Consultation
-            </a>
+          <div className="lg:hidden bg-white border-t border-blue-100 px-4 py-5 space-y-2 shadow-xl">
+            {NAV_LINKS.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 px-2 rounded-lg font-semibold text-slate-800 hover:bg-blue-50"
+              >
+                {item.label}
+              </a>
+            ))}
+            <div className="pt-2">
+              <a
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full py-3 rounded-xl text-center font-bold bg-blue-600 text-white shadow-md"
+              >
+                Request a Quote or Demo
+              </a>
+            </div>
           </div>
         )}
       </header>
 
       {/* Hero Section */}
-      <section className="hero-mesh pt-12 pb-20 lg:pt-16 lg:pb-24 border-b border-blue-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Hero Copy */}
-            <div className="lg:col-span-7 space-y-6">
+      <section className="hero-mesh pt-10 pb-14 lg:pt-14 lg:pb-18 border-b border-blue-100">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            {/* Left Column: Focused Hero Copy */}
+            <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-amber-300/80 text-blue-800 text-xs font-bold shadow-sm">
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                 <span>COMPLETE TECHNOLOGY, HARDWARE & INVENTORY PARTNER</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.12]">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.4rem] font-black tracking-tight text-slate-900 leading-[1.08]">
                 Empowering Businesses with{' '}
                 <span className="text-blue-600">Smart ERP</span>,{' '}
                 <span className="underline decoration-amber-400 decoration-4 underline-offset-4">
@@ -388,133 +435,75 @@ export default function App() {
                 & <span className="text-emerald-600">Managed Inventory</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                <strong>Ebenbiz Solutions</strong> is your end-to-end business technology partner. We build the powerful{' '}
-                <strong className="text-blue-700">Ebenbiz ERP</strong> platform, supply commercial{' '}
-                <strong className="text-slate-800">computers, laptops & POS printers</strong>, execute professional{' '}
-                <strong className="text-emerald-700">stock-taking & inventory management contracts</strong>, and keep your equipment running through{' '}
-                <strong className="text-slate-800">preventive hardware maintenance</strong>.
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
+                <strong>Ebenbiz Solutions</strong> equips Kenyan SMEs and enterprises with{' '}
+                <strong className="text-blue-700">Ebenbiz ERP</strong>, genuine{' '}
+                <strong className="text-slate-800">computers & POS hardware</strong>, independent{' '}
+                <strong className="text-emerald-700">stock-taking contracts</strong>, and preventive{' '}
+                <strong className="text-slate-800">hardware maintenance</strong> — under one roof.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-3.5 pt-1">
                 <a
                   href="#solutions"
-                  className="px-7 py-4 rounded-2xl font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/20 transition-all flex items-center gap-2 text-sm sm:text-base border-b-2 border-amber-400"
+                  className="px-6 py-3.5 rounded-xl font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/20 flex items-center gap-2 text-sm sm:text-base border-b-2 border-amber-400"
                 >
-                  Explore Our 4 Core Solutions
-                  <ArrowRight className="w-5 h-5 text-amber-300" />
+                  Explore Our 4 Solutions
+                  <ArrowRight className="w-4 h-4 text-amber-300" />
                 </a>
                 <a
                   href="#contact"
-                  className="px-7 py-4 rounded-2xl font-bold bg-white hover:bg-blue-50 text-blue-900 border-2 border-blue-200 transition-all text-sm sm:text-base"
+                  className="px-6 py-3.5 rounded-xl font-bold bg-white hover:bg-blue-50 text-blue-900 border-2 border-blue-200 text-sm sm:text-base"
                 >
-                  Request a Quote / Audit
+                  Book a Free Demo
                 </a>
               </div>
 
-              {/* Trust Strip */}
-              <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {/* Clean Single-Row Credibility Strip */}
+              <div className="pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-slate-600">
                 {[
-                  { title: 'Ebenbiz ERP', sub: 'POS, Stock & Accounting', color: 'border-l-4 border-l-blue-600' },
-                  { title: 'IT & POS Hardware', sub: 'Laptops, PCs & Printers', color: 'border-l-4 border-l-amber-400' },
-                  { title: 'Inventory Services', sub: 'Stock Taking & Contracts', color: 'border-l-4 border-l-emerald-500' },
-                  { title: 'IT Maintenance', sub: 'Cleaning & AMC Support', color: 'border-l-4 border-l-blue-500' }
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className={`bg-white p-3.5 rounded-xl border border-blue-100 shadow-sm ${item.color}`}
-                  >
-                    <div className="font-extrabold text-xs sm:text-sm text-slate-900">{item.title}</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">{item.sub}</div>
-                  </div>
+                  'Offline-Ready POS & M-Pesa',
+                  'Genuine Warranty Hardware',
+                  'Independent Stock Audits',
+                  'Preventive IT Maintenance',
+                ].map((pt) => (
+                  <span key={pt} className="inline-flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    {pt}
+                  </span>
                 ))}
               </div>
             </div>
 
-            {/* Right Column: Brand Card & 4-Division Overview */}
-            <div className="lg:col-span-5">
-              <div className="glass-surface rounded-3xl p-7 sm:p-8 border-2 border-blue-100 relative overflow-hidden">
-                {/* Soft Gold & Green corner accents */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-400/15 rounded-full blur-2xl pointer-events-none" />
-                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none" />
-
-                <div className="text-center pb-6 border-b border-blue-100">
-                  <EbenbizSolutionsLogo size="lg" />
-                  <p className="mt-3 text-xs font-semibold text-slate-500">
-                    One Trusted Organization • Four Specialized Business Divisions
-                  </p>
-                </div>
-
-                <div className="mt-6 space-y-3">
-                  {FOUR_PILLARS.map((pillar) => {
-                    const Icon = pillar.icon;
-                    return (
-                      <a
-                        key={pillar.id}
-                        href={`#${pillar.id}`}
-                        onClick={() => setActivePillarId(pillar.id)}
-                        className="flex items-center justify-between p-3.5 rounded-2xl bg-blue-50/60 hover:bg-blue-600 group transition-all border border-blue-100"
-                      >
-                        <div className="flex items-center gap-3.5">
-                          <div className="w-10 h-10 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-sm font-bold">
-                            <Icon className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <div className="text-sm font-extrabold text-slate-900 group-hover:text-white transition-colors">
-                              {pillar.title}
-                            </div>
-                            <div className="text-[11px] text-slate-500 group-hover:text-blue-100 transition-colors">
-                              {pillar.badge}
-                            </div>
-                          </div>
-                        </div>
-                        <ChevronRight className="w-4 h-4 text-blue-600 group-hover:text-amber-300 transition-colors" />
-                      </a>
-                    );
-                  })}
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-blue-100 flex items-center justify-between text-xs">
-                  <span className="font-bold text-emerald-700 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Tailored for SMEs & Enterprises
-                  </span>
-                  <span className="font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
-                     ★ Quality Guaranteed
-                  </span>
-                </div>
-              </div>
+            {/* Right Column: Interactive ERP / POS Workspace Preview */}
+            <div className="lg:col-span-6">
+              <HeroErpPreview onSelectPillar={setActivePillarId} />
             </div>
           </div>
         </div>
       </section>
 
+      <TrustBar />
+
       {/* Interactive 4 Pillars Explorer */}
-      <section id="solutions" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-extrabold uppercase tracking-wider">
-              What We Offer
-            </span>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-black text-slate-900">
-              Four Integrated Pillars Under{' '}
-              <span className="text-blue-600">Ebenbiz Solutions</span>
-            </h2>
-            <p className="mt-3 text-slate-600 text-sm sm:text-base">
-              Select any division below to explore how we equip, automate, audit, and maintain your business operations.
-            </p>
-          </div>
+      <section id="solutions" className="scroll-mt-24 py-16 lg:py-20 bg-white">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="What We Offer" dark="Four Integrated Pillars Under" accent="Ebenbiz Solutions">
+            Select any division below to see how we equip, automate, audit, and maintain your business operations.
+          </SectionHeading>
 
           {/* Pillar Selector Tabs */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
             {FOUR_PILLARS.map((pillar) => {
               const Icon = pillar.icon;
               const isSelected = activePillarId === pillar.id;
               return (
                 <button
                   key={pillar.id}
+                  type="button"
                   onClick={() => setActivePillarId(pillar.id)}
-                  className={`p-4 rounded-2xl text-left transition-all cursor-pointer border-2 flex items-center gap-3.5 ${
+                  className={`p-4 rounded-2xl text-left cursor-pointer border-2 flex items-center gap-3.5 ${
                     isSelected
                       ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-600/20'
                       : 'bg-slate-50 hover:bg-blue-50/60 text-slate-800 border-blue-100'
@@ -528,10 +517,10 @@ export default function App() {
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-extrabold uppercase tracking-wider opacity-80">
+                    <div className="text-[11px] font-extrabold uppercase tracking-wider opacity-80">
                       {pillar.shortTitle}
                     </div>
-                    <div className="font-bold text-sm leading-snug mt-0.5">{pillar.title}</div>
+                    <div className="font-display font-bold text-sm leading-snug mt-0.5">{pillar.title}</div>
                   </div>
                 </button>
               );
@@ -539,20 +528,20 @@ export default function App() {
           </div>
 
           {/* Active Pillar Spotlight Card */}
-          <div className="rounded-3xl bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900 text-white p-8 sm:p-12 shadow-2xl border border-blue-800">
+          <div className="rounded-3xl bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900 text-white p-7 sm:p-11 shadow-2xl border border-blue-800">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-7 space-y-5">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold">
                   <activePillar.icon className="w-3.5 h-3.5" />
                   {activePillar.badge}
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-black leading-tight">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold leading-tight">
                   {activePillar.headline}
                 </h3>
                 <p className="text-blue-100 text-sm sm:text-base leading-relaxed">
                   {activePillar.description}
                 </p>
-                <ul className="space-y-3 pt-2">
+                <ul className="space-y-3 pt-1">
                   {activePillar.highlights.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-blue-50">
                       <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
@@ -562,7 +551,7 @@ export default function App() {
                 </ul>
               </div>
 
-              <div className="lg:col-span-5 space-y-4">
+              <div className="lg:col-span-5">
                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/15 space-y-4">
                   <div className="text-xs font-bold uppercase tracking-widest text-amber-300">
                     Key Division Highlights
@@ -580,10 +569,8 @@ export default function App() {
                   </div>
                   <a
                     href="#contact"
-                    onClick={() =>
-                      setInquiryForm((prev) => ({ ...prev, service: activePillar.title }))
-                    }
-                    className="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm flex items-center justify-center gap-2 transition-all shadow-lg"
+                    onClick={() => selectServiceForQuote(activePillar.title)}
+                    className="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-lg"
                   >
                     Inquire About {activePillar.title}
                     <ArrowRight className="w-4 h-4" />
@@ -595,19 +582,19 @@ export default function App() {
         </div>
       </section>
 
+      <IndustriesStrip onRequestQuote={selectServiceForQuote} />
+
       {/* Deep-Dive Section 1: Ebenbiz ERP Product */}
-      <section id="erp" className="py-20 bg-blue-50/50 border-t border-blue-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wider">
-                Product 01 • Business Software
-              </span>
-              <h2 className="mt-2 text-3xl sm:text-4xl font-black text-slate-900">
-                Ebenbiz ERP — Built for Total Operational Control
-              </h2>
-            </div>
-            <p className="text-sm text-slate-600 max-w-md">
+      <section id="erp" className="scroll-mt-24 py-16 lg:py-20 bg-white border-t border-blue-100">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <SectionHeading
+              align="left"
+              eyebrow="Product 01 • Business Software"
+              dark="Ebenbiz ERP — Built for"
+              accent="Total Operational Control"
+            />
+            <p className="text-sm text-slate-600 max-w-md md:mb-10">
               Our in-house ERP platform unifies front-office POS checkouts, multi-branch inventory, manufacturing recipes, and automated double-entry accounting.
             </p>
           </div>
@@ -617,44 +604,44 @@ export default function App() {
               {
                 icon: ShoppingCart,
                 title: 'Smart POS & Offline Sync',
-                desc: 'Accept Cash, M-Pesa, Bank Transfer, Cheque, Credit Card & Store Credit in a single split checkout. Continues operating offline and syncs automatically.'
+                desc: 'Accept Cash, M-Pesa, Bank Transfer, Cheque, Credit Card & Store Credit in a single split checkout. Continues operating offline and syncs automatically.',
               },
               {
                 icon: BookOpen,
                 title: 'Automated Double-Entry Accounting',
-                desc: '52+ baseline Chart of Accounts shared across all branches. Every sale, invoice, payment, GRN, and stock adjustment auto-posts balanced Debit & Credit entries.'
+                desc: '52+ baseline Chart of Accounts shared across all branches. Every sale, invoice, payment, GRN, and stock adjustment auto-posts balanced Debit & Credit entries.',
               },
               {
                 icon: Truck,
                 title: 'POS-Style Supplier Invoicing',
-                desc: 'Search items into a purchase cart, enter quantities, update Buying (cost) and Selling (retail) prices simultaneously, or save supplier bills as drafts.'
+                desc: 'Search items into a purchase cart, enter quantities, update Buying (cost) and Selling (retail) prices simultaneously, or save supplier bills as drafts.',
               },
               {
                 icon: Boxes,
                 title: 'Multi-Branch & Warehouse Control',
-                desc: 'Track stock across unlimited retail stores and warehouses, manage Goods-in-Transit transfers, and map every branch to its default financial accounts.'
+                desc: 'Track stock across unlimited retail stores and warehouses, manage Goods-in-Transit transfers, and map every branch to its default financial accounts.',
               },
               {
                 icon: Factory,
                 title: 'Work Orders & Bill of Materials',
-                desc: 'Create multi-component recipes for Assembly & Linked items, mark raw materials as Not-For-Sale, print Material Requisitions, and track material usage.'
+                desc: 'Create multi-component recipes for Assembly & Linked items, mark raw materials as Not-For-Sale, print Material Requisitions, and track material usage.',
               },
               {
                 icon: Users,
                 title: 'Customer Hub & Recurring Billing',
-                desc: 'Manage B2B/B2C customer statements, quotations, bulk invoice payment allocations, customer credit notes, and automated recurring service contracts.'
-              }
+                desc: 'Manage B2B/B2C customer statements, quotations, bulk invoice payment allocations, customer credit notes, and automated recurring service contracts.',
+              },
             ].map((mod, idx) => {
               const Icon = mod.icon;
               return (
                 <div
                   key={idx}
-                  className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-md hover:border-blue-300 transition-all"
+                  className="card-hover bg-slate-50/60 hover:bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:border-blue-300"
                 >
                   <div className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-4 shadow-sm">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-extrabold text-slate-900 mb-2">{mod.title}</h3>
+                  <h3 className="font-display text-lg font-extrabold text-slate-900 mb-2">{mod.title}</h3>
                   <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{mod.desc}</p>
                 </div>
               );
@@ -664,38 +651,34 @@ export default function App() {
       </section>
 
       {/* Deep-Dive Section 2: Computers, Laptops, Printers & POS Hardware */}
-      <section id="hardware" className="py-20 bg-white border-t border-blue-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="px-3.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-300 text-xs font-extrabold uppercase tracking-wider">
-              Product 02 • IT & POS Hardware Supply
-            </span>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-black text-slate-900">
-              Computers, Laptops, Printers & Retail POS Hardware
-            </h2>
-            <p className="mt-3 text-sm sm:text-base text-slate-600">
-              Whether you are setting up a new retail checkout counter, upgrading office laptops, or equipping a warehouse, Ebenbiz Solutions supplies genuine, warranty-backed hardware.
-            </p>
-          </div>
+      <section id="hardware" className="scroll-mt-24 py-16 lg:py-20 bg-blue-50/40 bg-dot-subtle border-t border-blue-100">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="Product 02 • IT & POS Hardware Supply"
+            dark="Computers, Laptops, Printers &"
+            accent="Retail POS Hardware"
+          >
+            Whether you are setting up a new retail checkout counter, upgrading office laptops, or equipping a warehouse, Ebenbiz Solutions supplies genuine, warranty-backed hardware.
+          </SectionHeading>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {HARDWARE_CATALOG.map((cat, idx) => {
               const Icon = cat.icon;
               return (
                 <div
                   key={idx}
-                  className="rounded-3xl p-7 bg-slate-50 border-2 border-blue-100 flex flex-col justify-between hover:border-blue-500 transition-all"
+                  className="card-hover rounded-3xl p-7 bg-white border-2 border-blue-100 flex flex-col justify-between hover:border-blue-500 shadow-sm"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-5">
                       <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-md">
                         <Icon className="w-6 h-6" />
                       </div>
-                      <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+                      <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
                         {cat.tag}
                       </span>
                     </div>
-                    <h3 className="text-xl font-extrabold text-slate-900 mb-4">{cat.category}</h3>
+                    <h3 className="font-display text-xl font-extrabold text-slate-900 mb-4">{cat.category}</h3>
                     <ul className="space-y-3">
                       {cat.items.map((item, i) => (
                         <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
@@ -708,13 +691,8 @@ export default function App() {
 
                   <a
                     href="#contact"
-                    onClick={() =>
-                      setInquiryForm((prev) => ({
-                        ...prev,
-                        service: `Hardware Supply: ${cat.category}`
-                      }))
-                    }
-                    className="mt-7 w-full py-3 rounded-xl bg-white hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs sm:text-sm border border-blue-200 text-center transition-colors"
+                    onClick={() => selectServiceForQuote(`Hardware Supply: ${cat.category}`)}
+                    className="mt-7 w-full py-3 rounded-xl bg-blue-50/70 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs sm:text-sm border border-blue-200 text-center"
                   >
                     Request Hardware Price List →
                   </a>
@@ -726,19 +704,19 @@ export default function App() {
       </section>
 
       {/* Deep-Dive Section 3 & 4: Inventory Services + Hardware Maintenance */}
-      <section className="py-20 bg-gradient-to-b from-blue-50/60 to-white border-t border-blue-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <section className="py-16 lg:py-20 bg-white border-t border-blue-100">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           {/* Service 3: Stock Taking & Inventory Management Contracts */}
           <div
             id="inventory"
-            className="rounded-3xl bg-white p-8 sm:p-12 border-2 border-emerald-500/30 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+            className="scroll-mt-24 rounded-3xl bg-slate-50/60 p-7 sm:p-11 border-2 border-emerald-500/25 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
           >
             <div className="lg:col-span-7 space-y-4">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-extrabold uppercase">
                 <ClipboardCheck className="w-4 h-4 text-emerald-600" />
                 Service 03 • Inventory Audits & Managed Contracts
               </div>
-              <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
+              <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">
                 Professional Stock-Taking & Contract Inventory Management
               </h3>
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -751,7 +729,7 @@ export default function App() {
                   'Variance Analysis (Physical vs Book Stock)',
                   'Barcode Tagging, SKU Setup & Shelf Organization',
                   'Goods Receiving & Dispatch Control Audits',
-                  'Signed Executive Valuation & Shrinkage Reports'
+                  'Signed Executive Valuation & Shrinkage Reports',
                 ].map((pt, i) => (
                   <div key={i} className="flex items-start gap-2 text-xs sm:text-sm text-slate-800 font-medium">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
@@ -784,13 +762,8 @@ export default function App() {
               </div>
               <a
                 href="#contact"
-                onClick={() =>
-                  setInquiryForm((prev) => ({
-                    ...prev,
-                    service: 'Inventory Services / Stock-Taking Contract'
-                  }))
-                }
-                className="block w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-center text-xs sm:text-sm transition-colors"
+                onClick={() => selectServiceForQuote('Inventory Services / Stock-Taking Contract')}
+                className="block w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-center text-xs sm:text-sm"
               >
                 Book a Stock-Taking Assessment
               </a>
@@ -800,7 +773,7 @@ export default function App() {
           {/* Service 4: Computer & Hardware Maintenance */}
           <div
             id="maintenance"
-            className="rounded-3xl bg-white p-8 sm:p-12 border-2 border-blue-200 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+            className="scroll-mt-24 rounded-3xl bg-slate-50/60 p-7 sm:p-11 border-2 border-blue-200 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
           >
             <div className="lg:col-span-5 order-2 lg:order-1 bg-blue-950 text-white rounded-2xl p-6 sm:p-7 space-y-4 border border-blue-800">
               <div className="flex items-center justify-between">
@@ -815,7 +788,7 @@ export default function App() {
                   { task: 'CPU Fan & Heatsink Thermal Paste Renewal', freq: 'Every 6 Months' },
                   { task: 'POS Thermal Printer Head & Roller Servicing', freq: 'Every Quarter' },
                   { task: 'OS Health, Antivirus & Disk Speed Optimization', freq: 'Monthly / Quarterly' },
-                  { task: 'Power Backup (UPS) & Network Cable Audit', freq: 'Every Quarter' }
+                  { task: 'Power Backup (UPS) & Network Cable Audit', freq: 'Every Quarter' },
                 ].map((row, idx) => (
                   <div
                     key={idx}
@@ -830,13 +803,8 @@ export default function App() {
               </div>
               <a
                 href="#contact"
-                onClick={() =>
-                  setInquiryForm((prev) => ({
-                    ...prev,
-                    service: 'Hardware Maintenance & Computer Cleaning'
-                  }))
-                }
-                className="block w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-center text-xs sm:text-sm transition-colors"
+                onClick={() => selectServiceForQuote('Hardware Maintenance & Computer Cleaning')}
+                className="block w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-center text-xs sm:text-sm"
               >
                 Schedule Hardware Servicing
               </a>
@@ -847,7 +815,7 @@ export default function App() {
                 <Settings className="w-4 h-4 text-blue-600" />
                 Service 04 • Preventive & Corrective IT Care
               </div>
-              <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
+              <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">
                 Computer Cleaning, Printer Servicing & Annual Maintenance Contracts
               </h3>
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -860,7 +828,7 @@ export default function App() {
                   'POS Receipt & Office Printer Repair & Calibration',
                   'SSD & RAM Upgrades for Slow Computers',
                   'Annual Maintenance Contracts (AMC) for Offices',
-                  'Emergency On-Site & Remote IT Troubleshooting'
+                  'Emergency On-Site & Remote IT Troubleshooting',
                 ].map((pt, i) => (
                   <div key={i} className="flex items-start gap-2 text-xs sm:text-sm text-slate-800 font-medium">
                     <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
@@ -873,17 +841,20 @@ export default function App() {
         </div>
       </section>
 
+      <Packages />
+      <WhyChoose />
+      <OfferBanner />
+      <Team />
+      <Testimonials />
+
       {/* FAQ Section */}
-      <section id="faq" className="py-16 bg-white border-t border-blue-100">
+      <section id="faq" className="scroll-mt-24 py-16 bg-blue-50/30 border-t border-blue-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-extrabold uppercase tracking-wider">
-              Frequently Asked Questions
-            </span>
-            <h2 className="mt-2 text-2xl sm:text-3xl font-black text-slate-900">
-              Everything You Need to Know About Ebenbiz Solutions
-            </h2>
-          </div>
+          <SectionHeading
+            eyebrow="Frequently Asked Questions"
+            dark="Everything You Need to Know About"
+            accent="Ebenbiz Solutions"
+          />
 
           <div className="space-y-3">
             {FAQS.map((item, idx) => {
@@ -891,24 +862,25 @@ export default function App() {
               return (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-blue-100 bg-slate-50/70 overflow-hidden"
+                  className="rounded-2xl border border-blue-100 bg-white overflow-hidden shadow-xs"
                 >
                   <button
+                    type="button"
                     onClick={() => setOpenFaqIdx(isOpen ? -1 : idx)}
-                    className="w-full px-6 py-4 text-left flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-slate-900 cursor-pointer hover:bg-blue-50/50 transition-colors"
+                    className="w-full px-6 py-4 text-left flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-slate-900 cursor-pointer hover:bg-blue-50/50"
                   >
                     <span className="flex items-center gap-2.5">
                       <HelpCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                       {item.q}
                     </span>
                     <ChevronDown
-                      className={`w-4 h-4 text-slate-400 transition-transform ${
+                      className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${
                         isOpen ? 'rotate-180 text-blue-600' : ''
                       }`}
                     />
                   </button>
                   {isOpen && (
-                    <div className="px-6 pb-5 pt-3 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white border-t border-blue-100">
+                    <div className="px-6 pb-5 pt-3 text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50/60 border-t border-blue-100">
                       {item.a}
                     </div>
                   )}
@@ -920,13 +892,13 @@ export default function App() {
       </section>
 
       {/* Contact / Quote Request Section */}
-      <section id="contact" className="py-20 bg-blue-50/50 border-t border-blue-100">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl p-8 sm:p-12 border-2 border-blue-100 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <section id="contact" className="scroll-mt-24 py-16 lg:py-20 bg-white border-t border-blue-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-slate-50/70 rounded-3xl p-7 sm:p-12 border-2 border-blue-100 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10">
             <div className="lg:col-span-5 space-y-5">
               <EbenbizSolutionsLogo size="md" />
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 pt-2">
-                Let’s Power Your Business Operations
+              <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 pt-2">
+                Let’s Power Your <span className="text-blue-600">Business Operations</span>
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
                 Request an <strong>Ebenbiz ERP</strong> demo, get a quotation for{' '}
@@ -935,37 +907,55 @@ export default function App() {
                 <strong>computer maintenance</strong>.
               </p>
 
-              <div className="space-y-3 pt-2 text-xs sm:text-sm">
+              <div className="space-y-2.5 pt-1 text-xs sm:text-sm">
                 <div className="flex items-center gap-2.5 text-slate-700 font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
                   <span>Ebenbiz ERP Software Implementation</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-slate-700 font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-amber-500" />
+                  <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0" />
                   <span>Laptops, Computers, Printers & POS Kits</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-slate-700 font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Stock-Taking Audits & Inventory Contracts</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-slate-700 font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
                   <span>Computer Cleaning & Hardware Maintenance</span>
                 </div>
               </div>
+
+              <div className="pt-3 border-t border-blue-100 space-y-2 text-sm">
+                {[
+                  ['Sales', 'sales@ebenbiz.co.ke'],
+                  ['Support', 'support@ebenbiz.co.ke'],
+                  ['General', 'info@ebenbiz.co.ke'],
+                ].map(([label, email]) => (
+                  <a
+                    key={email}
+                    href={`mailto:${email}`}
+                    className="flex items-center gap-2.5 text-slate-700 hover:text-blue-700 font-medium"
+                  >
+                    <Mail className="w-4 h-4 text-blue-600 shrink-0" />
+                    <span className="text-slate-500 w-16">{label}</span>
+                    <span className="truncate">{email}</span>
+                  </a>
+                ))}
+              </div>
             </div>
 
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 border border-blue-100 shadow-sm">
               {formSubmitted ? (
-                <div className="p-8 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-center space-y-4">
+                <div className="p-6 sm:p-8 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-center space-y-4">
                   <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto text-emerald-600">
                     <MessageCircle className="w-8 h-8" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900">
+                  <h3 className="font-display text-xl font-extrabold text-slate-900">
                     Connecting to WhatsApp...
                   </h3>
                   <p className="text-sm text-slate-600 max-w-md mx-auto">
-                    Thank you, <strong>{inquiryForm.name}</strong>! We've prepared your inquiry regarding{' '}
+                    Thank you, <strong>{inquiryForm.name}</strong>! We’ve prepared your inquiry regarding{' '}
                     <span className="font-semibold text-blue-700">{inquiryForm.service}</span>.
                   </p>
                   <p className="text-xs text-slate-500">
@@ -976,23 +966,24 @@ export default function App() {
                       href={generateWhatsAppUrl(inquiryForm)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20 cursor-pointer"
                     >
                       <MessageCircle className="w-5 h-5" />
                       Chat on WhatsApp Now
                     </a>
                     <button
+                      type="button"
                       onClick={() => {
                         setFormSubmitted(false);
                         setInquiryForm({
                           name: '',
                           organization: '',
                           phone: '',
-                          service: 'Complete Package (ERP + Hardware + Services)',
-                          message: ''
+                          service: DEFAULT_SERVICES[0],
+                          message: '',
                         });
                       }}
-                      className="px-5 py-3 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200/60 transition-colors cursor-pointer"
+                      className="px-5 py-3 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200/60 cursor-pointer"
                     >
                       Send Another Request
                     </button>
@@ -1052,11 +1043,11 @@ export default function App() {
                         onChange={(e) => setInquiryForm({ ...inquiryForm, service: e.target.value })}
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-blue-200 text-sm focus:ring-2 focus:ring-blue-600 focus:bg-white outline-none font-medium"
                       >
-                        <option>Complete Package (ERP + Hardware + Services)</option>
-                        <option>Ebenbiz ERP Software</option>
-                        <option>Hardware Supply (Laptops, Computers, Printers, POS)</option>
-                        <option>Inventory Services / Stock-Taking Contract</option>
-                        <option>Hardware Maintenance & Computer Cleaning</option>
+                        {serviceOptions.map((opt) => (
+                          <option key={opt} value={opt}>
+                            {opt}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -1076,7 +1067,7 @@ export default function App() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/25 border-b-2 border-emerald-400 transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
+                    className="w-full py-3.5 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/25 border-b-2 border-emerald-400 flex items-center justify-center gap-2 cursor-pointer text-sm"
                   >
                     <MessageCircle className="w-5 h-5" />
                     Send Inquiry via WhatsApp
@@ -1088,62 +1079,13 @@ export default function App() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 bg-slate-950 text-slate-400 border-t border-blue-900 text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl overflow-hidden bg-white p-0.5">
-              <img
-                src="/logo.jpg"
-                alt="Ebenbiz Solutions"
-                className="w-full h-[175%] object-cover object-top scale-110"
-              />
-            </div>
-            <div>
-              <span className="font-black text-base text-white tracking-tight">
-                eben<span className="text-blue-400">biz</span>{' '}
-                <span className="text-[10px] uppercase tracking-widest text-amber-400 font-bold ml-1">
-                  SOLUTIONS
-                </span>
-              </span>
-              <p className="text-[11px] text-slate-500">
-                ERP Software • Computers & Printers • Stock-Taking Contracts • Hardware Maintenance
-              </p>
-              <p className="text-[11px] text-emerald-400 font-semibold mt-0.5">
-                Direct WhatsApp / Call: +254 719 620 443
-              </p>
-            </div>
+      <Footer
+        Logo={
+          <div className="inline-block bg-white rounded-xl p-2">
+            <EbenbizSolutionsLogo size="md" />
           </div>
-
-          <div className="flex flex-wrap items-center gap-6 text-slate-300 font-medium">
-            <a href="#erp" className="hover:text-amber-400 transition-colors">Ebenbiz ERP</a>
-            <a href="#hardware" className="hover:text-amber-400 transition-colors">Hardware</a>
-            <a href="#inventory" className="hover:text-emerald-400 transition-colors">Inventory Services</a>
-            <a href="#maintenance" className="hover:text-amber-400 transition-colors">Maintenance</a>
-            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
-            <a 
-              href="https://wa.me/254719620443?text=Hello%20Ebenbiz%20Solutions,%20I%20have%20an%20inquiry." 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1"
-            >
-              <MessageCircle className="w-3.5 h-3.5" /> 0719 620 443
-            </a>
-          </div>
-        </div>
-      </footer>
-
-      {/* Floating WhatsApp Action Button */}
-      <a
-        href="https://wa.me/254719620443?text=Hello%20Ebenbiz%20Solutions,%20I%20have%20an%20inquiry%20regarding%20your%20services."
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-full shadow-2xl shadow-emerald-600/40 hover:scale-105 transition-all group"
-        title="Chat on WhatsApp (+254 719 620 443)"
-      >
-        <MessageCircle className="w-5 h-5 fill-white" />
-        <span className="hidden sm:inline">Chat on WhatsApp</span>
-      </a>
+        }
+      />
     </div>
   );
 }
