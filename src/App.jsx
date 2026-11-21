@@ -234,6 +234,14 @@ const FAQS = [
     q: 'Do you supply and set up complete POS hardware alongside Ebenbiz ERP?',
     a: 'Yes. We supply laptops, desktops, touch POS terminals, thermal printers, barcode scanners, and cash drawers, pre-install and configure Ebenbiz ERP, and train your cashiers and accountants on-site.',
   },
+  {
+    q: 'Does Ebenbiz ERP support M-Pesa payments and continue working when internet goes offline?',
+    a: 'Yes. Ebenbiz ERP supports split payments combining Cash, M-Pesa, Bank Transfer, Card, and Store Credit on a single receipt, and its offline-ready POS continues selling without internet and syncs automatically once connectivity returns.',
+  },
+  {
+    q: 'Which industries and towns in Kenya does Ebenbiz Solutions serve?',
+    a: 'We serve supermarkets, mini-marts, pharmacies, chemists, hardware stores, agrovets, wholesalers, warehouses, manufacturers, and corporate offices across Nairobi, Mombasa, Kisumu, Nakuru, Eldoret, Thika, Nyeri, Machakos, Meru, and nationwide across Kenya.',
+  },
 ];
 
 const DEFAULT_SERVICES = [
@@ -269,8 +277,27 @@ export default function App() {
     message: '',
   });
 
-  // Scroll-reveal animation for below-the-fold sections
+  // Scroll-reveal animation for below-the-fold sections + SEO landing route auto-focus
   useEffect(() => {
+    const slugMap = {
+      '/erp-software-kenya': { pillar: 'erp', target: '#erp' },
+      '/pos-hardware-kenya': { pillar: 'hardware', target: '#hardware' },
+      '/stock-taking-services-kenya': { pillar: 'inventory', target: '#inventory' },
+      '/computer-maintenance-kenya': { pillar: 'maintenance', target: '#maintenance' },
+      '/supermarket-pos-system-kenya': { target: '#industries' },
+      '/pharmacy-pos-software-kenya': { target: '#industries' },
+      '/hardware-store-pos-erp-kenya': { target: '#industries' },
+    };
+    const pathKey = window.location.pathname.replace(/\/+$/, '');
+    const matched = slugMap[pathKey];
+    if (matched) {
+      if (matched.pillar) setActivePillarId(matched.pillar);
+      setTimeout(() => {
+        const el = document.querySelector(matched.target);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+    }
+
     const targets = document.querySelectorAll('section:not(.hero-mesh) > div > *');
     const io = new IntersectionObserver(
       (entries) =>

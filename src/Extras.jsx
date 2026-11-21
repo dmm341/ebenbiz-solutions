@@ -400,7 +400,12 @@ const INDUSTRIES = [
 ];
 
 export function IndustriesStrip({ onRequestQuote }) {
-  const [selectedId, setSelectedId] = useState(INDUSTRIES[0].id);
+  const [selectedId, setSelectedId] = useState(() => {
+    const p = typeof window !== 'undefined' ? window.location.pathname.replace(/\/+$/, '') : '';
+    if (p === '/pharmacy-pos-software-kenya') return 'pharmacy';
+    if (p === '/hardware-store-pos-erp-kenya') return 'hardware-store';
+    return INDUSTRIES[0].id;
+  });
   const current = INDUSTRIES.find((i) => i.id === selectedId) || INDUSTRIES[0];
   const ActiveIcon = current.icon;
 
@@ -871,6 +876,34 @@ export function Footer({ Logo }) {
             <span className="flex items-center gap-2.5">
               <MapPin className="w-4 h-4 text-amber-400 shrink-0" /> Kenya — nationwide delivery & on-site support
             </span>
+          </div>
+        </div>
+
+        {/* SEO Directory: Popular Searches & Regional Coverage across Kenya */}
+        <div className="border-t border-slate-800/80 bg-slate-900/40">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-3 text-[11px] text-slate-400">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+              <span className="font-bold uppercase tracking-wider text-amber-400 mr-1">Popular Searches:</span>
+              {[
+                { href: '/erp-software-kenya', label: 'ERP & POS Software Kenya' },
+                { href: '/pos-hardware-kenya', label: 'POS Hardware & Receipt Printers' },
+                { href: '/stock-taking-services-kenya', label: 'Physical Stock-Taking & Inventory Audits' },
+                { href: '/computer-maintenance-kenya', label: 'Computer Cleaning & AMC Maintenance' },
+                { href: '/supermarket-pos-system-kenya', label: 'Supermarket & Mini-Mart POS' },
+                { href: '/pharmacy-pos-software-kenya', label: 'Pharmacy & Chemist POS' },
+                { href: '/hardware-store-pos-erp-kenya', label: 'Hardware Store & Wholesale ERP' },
+              ].map((s, idx, arr) => (
+                <React.Fragment key={s.href}>
+                  <a href={s.href} className="hover:text-white underline-offset-2 hover:underline">
+                    {s.label}
+                  </a>
+                  {idx < arr.length - 1 && <span className="text-slate-700">•</span>}
+                </React.Fragment>
+              ))}
+            </div>
+            <div className="text-slate-500">
+              <strong className="text-slate-400">Nationwide Service Coverage:</strong> Nairobi • Mombasa • Kisumu • Nakuru • Eldoret • Thika • Nyeri • Machakos • Meru • Naivasha • All 47 Counties in Kenya
+            </div>
           </div>
         </div>
 
