@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const SITE_URL = 'https://ebenbiz.vercel.app';
+const SITE_URL = 'https://ebenbiz.co.ke';
 const TODAY = new Date().toISOString().split('T')[0];
 
 export const SEO_PAGES = [
