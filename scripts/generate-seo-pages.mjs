@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const SITE_URL = 'https://ebenbiz.co.ke';
+const SITE_URL = 'https://www.ebenbiz.co.ke';
+const APEX_URL = 'https://ebenbiz.co.ke';
 const TODAY = new Date().toISOString().split('T')[0];
 
 export const SEO_PAGES = [
@@ -160,9 +161,34 @@ Allow: /
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
 
+const apexUrls = [
+  { loc: `${APEX_URL}/`, priority: '1.0', changefreq: 'weekly' },
+  ...SEO_PAGES.map((p) => ({
+    loc: `${APEX_URL}/${p.slug}`,
+    priority: '0.9',
+    changefreq: 'weekly',
+  })),
+];
+
+const apexSitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${apexUrls
+  .map(
+    (u) => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`
+  )
+  .join('\n')}
+</urlset>
+`;
+
 for (const dir of [publicDir, distDir]) {
   if (fs.existsSync(dir)) {
     fs.writeFileSync(path.join(dir, 'sitemap.xml'), sitemapXml, 'utf8');
+    fs.writeFileSync(path.join(dir, 'sitemap-apex.xml'), apexSitemapXml, 'utf8');
     fs.writeFileSync(path.join(dir, 'robots.txt'), robotsTxt, 'utf8');
   }
 }

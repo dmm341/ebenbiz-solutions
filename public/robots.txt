@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ebenbiz.co.ke/sitemap.xml
+Sitemap: https://www.ebenbiz.co.ke/sitemap.xml
